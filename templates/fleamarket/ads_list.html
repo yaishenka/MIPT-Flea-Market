@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for ad in ads %}
+    <div>
+        <p>{{ ad.text|linebreaksbr }}</p>
+    </div>
+{% endfor %}
+{% endblock %}
