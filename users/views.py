@@ -60,4 +60,8 @@ def user_register(request):
     return render(request, 'users/register.html',
                   {'form': user_form, 'error': False})
 
+def user_logout(request):
+    logout(request)
+    return redirect('ads_list')
+
 

@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>{{ ad.get_header }} </p>
+    <p>Автор - {{ad.seller.get_full_name}}</p>
+    <p>{{ ad.text|linebreaksbr }}</p>
+    <a href="{% url 'change_ad' pk=ad.pk %}"> edit </a>
+{% endblock %}
