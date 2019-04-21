@@ -15,7 +15,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 AUTHENTICATION_BACKENDS = [
     # 'social_core.backends.vk.VKOAuth2',
     # 'social_core.backends.open_id.OpenIdAuth',
-    'users.models.AuthBackend',
+    'users.backends.AuthBackend',
 ]
 
 LOGIN_URL = 'login'

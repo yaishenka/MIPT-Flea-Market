@@ -2,7 +2,6 @@ from django.db import models
 import uuid
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, \
     BaseUserManager
-from django.core.exceptions import ValidationError
 
 
 class UserAccountManager(BaseUserManager):
@@ -54,25 +53,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     restore_password_uuid = models.UUIDField(default=None, blank=True,
                                              null=True)
 
-
-from django.contrib.auth.backends import ModelBackend
-class AuthBackend(ModelBackend):
-    def authenticate(self, request, username=None, password=None, **kwargs):
-        if '@' in username:
-            kwargs = {'email': username}
+    @property
+    def get_full_name(self):
+        if self.full_name is not None:
+            return self.full_name
         else:
-            kwargs = {'username': username}
-        try:
-            user = CustomUser.objects.get(**kwargs)
-            if user.check_password(password):
-                return user
-            else:
-                raise ValidationError("wrong password")
-        except CustomUser.DoesNotExist:
-            raise CustomUser.DoesNotExist
+            return self.username
 
-    def get_user(self, user_id):
-        try:
-            return CustomUser.objects.get(pk=user_id)
-        except CustomUser.DoesNotExist:
-            return None
+

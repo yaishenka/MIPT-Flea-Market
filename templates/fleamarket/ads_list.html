@@ -3,6 +3,8 @@
 {% block content %}
 {% for ad in ads %}
     <div>
+        <p>{{ ad.get_header }} </p>
+        <p>Автор - {{ad.seller.get_full_name}}</p>
         <p>{{ ad.text|linebreaksbr }}</p>
     </div>
 {% endfor %}
