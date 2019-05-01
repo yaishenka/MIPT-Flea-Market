@@ -9,7 +9,7 @@ class UserAccountManager(BaseUserManager):
 
     def _create_user(self, email, password, **extra_fields):
         if not password:
-            raise ValueError('Password must be provided')
+            password = None
 
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
@@ -59,5 +59,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             return self.full_name
         else:
             return self.username
+
+    @property
+    def is_social_user(self):
+        from social_django.models import UserSocialAuth
+        try:
+            social_user = UserSocialAuth.objects.get(user=self)
+        except UserSocialAuth.DoesNotExist:
+            return False
+        else:
+            return True
 
 

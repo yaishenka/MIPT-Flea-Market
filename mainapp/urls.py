@@ -15,7 +15,8 @@ urlpatterns = [
                   path('', include('users.urls')),
                   path('user/', include('users.urls')),
                   path('vk/', include('vk_sender.urls')),
-                  path('subs/', include('subscriptions.urls'))
+                  path('subs/', include('subscriptions.urls')),
+                  path('social/', include('social_django.urls', namespace='social'))
               ] + static(settings.STATIC_URL,
                          document_root=settings.STATIC_ROOT) + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

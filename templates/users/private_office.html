@@ -4,12 +4,16 @@
     <h2>Личный кабинет</h2>
 
     <p> Мои подписки: </p>
-    {% for subscription in users_subscriptions %}
-        <div>
-            <p> {{ subscription.name }} </p>
-        </div>
-    {% endfor %}
-    <a href="{% url 'control_subs' %}"> Управлять подписками </a>
+    {% if user.is_social_user %}
+        {% for subscription in users_subscriptions %}
+            <div>
+                <p> {{ subscription.name }} </p>
+            </div>
+        {% endfor %}
+        <a href="{% url 'control_subs' %}"> Управлять подписками </a>
+    {% else %}
+        <p> Сначала подключите vk </p>
+    {% endif %}
 
     <hr align="left" width="500" size="2" color="#ff0000" />
 
