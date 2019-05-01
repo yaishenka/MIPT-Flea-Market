@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Управление подписками</h2>
+
+    <p> Подписки: </p>
+    {% for subscription in available_subs %}
+
+        <div>
+            {% if subscription in users_subs %}
+                <p> {{ subscription.name }} <a href="{% url 'unsubscribe' subscription_id=subscription.pk %}"> отписаться </a></p>
+            {% else %}
+                <p> {{ subscription.name }} <a href="{% url 'subscribe' subscription_id=subscription.pk %}"> подписаться </a></p>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+{% endblock %}

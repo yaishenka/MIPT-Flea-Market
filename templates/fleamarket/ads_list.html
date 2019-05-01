@@ -4,7 +4,10 @@
 {% for ad in ads %}
     <div>
         <a href="{% url 'view_ad' pk=ad.pk %}">{{ ad.get_header }} </a>
-        <p>Автор - {{ad.seller.get_full_name}}</p>
+        {% if ad.image %}
+            <img src="{{ad.image.url}}">
+        {% endif %}
+        <p>Автор - <a href="{% url 'user_view' user_id=ad.seller.pk %}"> {{ad.seller.get_full_name}} </a></p>
         <p>{{ ad.text|linebreaksbr }}</p>
         <hr align="left" width="500" size="2" color="#ff0000" />
     </div>

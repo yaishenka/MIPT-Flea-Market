@@ -2,7 +2,13 @@
 
 {% block content %}
     <p>{{ ad.get_header }} </p>
-    <p>Автор - {{ad.seller.get_full_name}}</p>
+    <p>Автор - <a href="{% url 'user_view' user_id=ad.seller.pk %}"> {{ad.seller.get_full_name}} </a></p>
+    {% if ad.image %}
+        <img src="{{ad.image.url}}">
+    {% endif %}
     <p>{{ ad.text|linebreaksbr }}</p>
-    <a href="{% url 'change_ad' pk=ad.pk %}"> edit </a>
+    {% if user == ad.seller %}
+        <a href="{% url 'change_ad' pk=ad.pk %}"> edit </a>
+        <a href="{% url 'delete_ad' pk=ad.pk %}"> delete </a>
+    {% endif %}
 {% endblock %}

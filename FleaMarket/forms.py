@@ -5,5 +5,5 @@ from .models import AbstractAd
 class AbstractAdForm(forms.ModelForm):
     class Meta:
         model = AbstractAd
-        fields = ('text', 'category', 'header')
+        fields = ('text', 'category', 'header', 'image')
 

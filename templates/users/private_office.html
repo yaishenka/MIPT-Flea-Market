@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Личный кабинет</h2>
+
+    <p> Мои подписки: </p>
+    {% for subscription in users_subscriptions %}
+        <div>
+            <p> {{ subscription.name }} </p>
+        </div>
+    {% endfor %}
+    <a href="{% url 'control_subs' %}"> Управлять подписками </a>
+
+    <hr align="left" width="500" size="2" color="#ff0000" />
+
+    <p> Мои объявления </p>
+    {% for ad in users_ads %}
+        <div>
+            <a href="{% url 'view_ad' pk=ad.pk %}">{{ ad.get_header }} </a>
+            {% if ad.image %}
+                <img src="{{ad.image.url}}">
+            {% endif %}
+            <p>Автор - <a href="{% url 'user_view' user_id=ad.seller.pk %}"> {{ad.seller.get_full_name}} </a></p>
+            <p>{{ ad.text|linebreaksbr }}</p>
+            <hr align="left" width="500" size="2" color="#ff0000" />
+        </div>
+    {% endfor %}
+
+{% endblock %}

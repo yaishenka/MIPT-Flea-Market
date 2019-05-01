@@ -1,10 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import UserRegistrationForm
 from django.contrib.auth import login, logout
 from .backends import AuthBackend
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.contrib.auth.decorators import login_required
+from fleamarket.models import AbstractAd
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -13,8 +16,9 @@ def user_login(request):
         password = request.POST['password']
         auth_backend = AuthBackend()
         try:
-            user = auth_backend.authenticate(request=request, username=username,
-                                            password=password)
+            user = auth_backend.authenticate(request=request,
+                                             username=username,
+                                             password=password)
             if user.is_active:
                 login(request, user, backend='users.backends.AuthBackend')
                 if request.GET.get('next'):
@@ -36,6 +40,7 @@ def user_login(request):
         login_form = AuthenticationForm()
     return render(request, 'users/login.html',
                   {'form': login_form, 'error': False})
+
 
 def user_register(request):
     if request.method == 'POST':
@@ -60,8 +65,25 @@ def user_register(request):
     return render(request, 'users/register.html',
                   {'form': user_form, 'error': False})
 
+
 def user_logout(request):
     logout(request)
     return redirect('ads_list')
 
+
+def user_view(request, user_id):
+    user = get_object_or_404(get_user_model(), pk=user_id)
+    users_ads = AbstractAd.objects.filter(seller=user)
+    return render(request, 'users/user.html',
+                  {'user_obj': user, 'users_ads': users_ads})
+
+
+@login_required
+def private_office(request):
+    user = request.user
+    users_subscriptions = user.groups.all()
+    users_ads = AbstractAd.objects.filter(seller=user)
+    return render(request, 'users/private_office.html',
+                  {'user_obj': user, 'users_ads': users_ads,
+                   'users_subscriptions': users_subscriptions})
 

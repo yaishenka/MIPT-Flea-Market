@@ -2,11 +2,12 @@ import os
 import json
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+with open('security_info.json') as json_secret:
+    secret_data = json.load(json_secret)
+    SECRET_KEY = secret_data['django_secret_key']
+    VK_API_KEY = secret_data['vk_api_key']
 
-with open('security_info.json') as json_api_key:
-    SECRET_KEY = json.load(json_api_key)['django_secret_key']
-
-
+VK_API_VERSION = 5.90
 
 ALLOWED_HOSTS = []
 
@@ -32,7 +33,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
-    'fleamarket'
+    'fleamarket',
+    'vk_sender',
+    'subscriptions'
 ]
 
 
@@ -101,3 +104,6 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+STATIC_ROOT = './static/'
+MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
+MEDIA_URL = '/media/'
