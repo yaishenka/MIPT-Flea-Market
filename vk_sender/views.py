@@ -7,7 +7,8 @@ import json
 # Create your views here.
 @csrf_exempt
 def vk_callback(request):
-    request_type = json.loads(request.body.decode('utf-8')['type']
+    request_type = json.loads(request.body.decode('utf-8'))['type']
+    print(request_type)
     if request_type == "confirmation":
         return HttpResponse("07ca78fc", content_type="text/plain", status=200)
     return redirect('ads_list')
