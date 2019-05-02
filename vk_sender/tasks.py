@@ -9,14 +9,18 @@ def send_vk_api_request(method_name, token, data):
     response = requests.get('https://api.vk.com/method/{}'.format(method_name), params=data)
     return response.json()
 
+def send_vk_message_by_uid(uid, message):
+    data = {}
+    data['user_id'] = uid
+    data['message'] = message
+    send_vk_api_request('messages.send', token=settings.VK_API_KEY, data=data)
+
 def send_vk_message(user_id, message, *args, **kwargs):
     user = get_user_model().objects.get(id=user_id)
     for auth in user.social_auth.all():
         uid = auth.uid
-        data = {}
-        data['user_id'] = uid
-        data['message'] = message
-        send_vk_api_request('messages.send', token=settings.VK_API_KEY, data=data)
+        send_vk_message_by_uid(uid, message)
+
 
 def send_vk_message_with_photos(user_id, message, photo):
     user = get_user_model().objects.get(id=user_id)
