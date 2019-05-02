@@ -12,11 +12,13 @@ def vk_callback(request):
         data = json.loads(request.body.decode('utf-8'))
         request_type = data['type']
     except:
-        return
+        return HttpResponse("ok", content_type="text/plain", status=200)
     if request_type == "confirmation":
         return HttpResponse("07ca78fc", content_type="text/plain", status=200)
     elif request_type == "message_new":
-        vk_parse_message(data['objects'])
+        vk_parse_message(data['object'])
+    return HttpResponse("ok", content_type="text/plain", status=200)
+
 
 
 @csrf_exempt
