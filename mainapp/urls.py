@@ -14,7 +14,7 @@ urlpatterns = [
                   path('', include('fleamarket.urls')),
                   path('', include('users.urls')),
                   path('user/', include('users.urls')),
-                  path('vk/', include('vk_sender.urls')),
+                  path('vk_callback/', include('vk_sender.urls')),
                   path('subs/', include('subscriptions.urls')),
                   path('social/', include('social_django.urls', namespace='social'))
               ] + static(settings.STATIC_URL,

@@ -1,7 +1,7 @@
 from django.urls import path, include
-from .views import test_vk
+from .views import vk_callback
 
 
 urlpatterns = [
-    path('', test_vk)
+    path('', vk_callback, name='vk_callback')
 ]
