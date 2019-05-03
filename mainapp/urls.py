@@ -11,11 +11,8 @@ favicon_view = RedirectView.as_view(url='/static/images/favicon.ico',
 urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('favicon.ico', favicon_view),
-                  path('', include('fleamarket.urls')),
-                  path('', include('users.urls')),
-                  path('user/', include('users.urls')),
-                  path('vk_callback/', include('vk_sender.urls')),
-                  path('subs/', include('subscriptions.urls')),
+                  path('flea_market/', include('fleamarket.urls')),
+                  path('flea_market/', include('users.urls')),
                   path('social/', include('social_django.urls', namespace='social'))
               ] + static(settings.STATIC_URL,
                          document_root=settings.STATIC_ROOT) + static(

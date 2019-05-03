@@ -14,7 +14,7 @@ def vk_callback(request):
     except:
         return HttpResponse("ok", content_type="text/plain", status=200)
     if request_type == "confirmation":
-        return HttpResponse("07ca78fc", content_type="text/plain", status=200)
+        return HttpResponse("bf95a919", content_type="text/plain", status=200)
     elif request_type == "message_new":
         vk_parse_message(data['object'])
     return HttpResponse("ok", content_type="text/plain", status=200)
