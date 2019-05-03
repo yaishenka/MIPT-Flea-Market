@@ -38,7 +38,7 @@ def vk_error(user_id):
 @csrf_exempt
 def send_ad_in_category(user_id, category):
     message_text = ''
-    for ad in AbstractAd.objects.filter(category == category):
+    for ad in AbstractAd.objects.filter(category=category):
         ad_text = '''Автор - {0} \n
                          {1} \n
                          {2} \n
