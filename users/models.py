@@ -1,5 +1,5 @@
-from django.db import models
 import uuid
+from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, \
     BaseUserManager
 
@@ -15,10 +15,6 @@ class UserAccountManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
-
-        if email is not None:
-            pass
-            # TODO sen verification email
 
         return user
 
@@ -57,8 +53,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def get_full_name(self):
         if self.full_name is not None:
             return self.full_name
-        else:
-            return self.username
+
+        return self.username
 
     @property
     def is_social_user(self):
@@ -67,7 +63,5 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             social_user = UserSocialAuth.objects.get(user=self)
         except UserSocialAuth.DoesNotExist:
             return False
-        else:
-            return True
 
-
+        return True

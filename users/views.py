@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import UserRegistrationForm
-from django.contrib.auth import login, logout
-from .backends import AuthBackend
-from django.contrib.auth import get_user_model
+from django.contrib.auth import login, logout, get_user_model
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
 from fleamarket.models import AbstractAd
+from .forms import UserRegistrationForm
+from .backends import AuthBackend
 
 
 def user_login(request):
@@ -86,4 +85,3 @@ def private_office(request):
     return render(request, 'users/private_office.html',
                   {'user_obj': user, 'users_ads': users_ads,
                    'users_subscriptions': users_subscriptions})
-

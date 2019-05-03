@@ -1,21 +1,32 @@
-from django.utils.deconstruct import deconstructible
+"""Some helpful utils to validate images"""
 import os
+from os.path import splitext
 import uuid
 from PIL import Image
-from os.path import splitext
+from django.utils.deconstruct import deconstructible
+from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
 from django.template.defaultfilters import filesizeformat
-from django.utils.translation import ugettext_lazy as _
+
 
 @deconstructible
-class FileValidator(object):
-    extension_message = _("Extension '%(extension)s' not allowed. Allowed extensions are: '%(allowed_extensions)s.'")
+class FileValidator:
+    """Class to validate image in django model field"""
+    extension_message = _(
+        "Extension '%(extension)s' not allowed. "
+        "Allowed extensions are: '%(allowed_extensions)s.'")
     width_message = _(
-        'The current image width %(width)s, which is not allowed. The allowed width  is %(allowed_width)s.')
+        'The current image width %(width)s, which is not allowed. '
+        'The allowed width  is %(allowed_width)s.')
     height_message = _(
-        'The current image height %(height)s, which is not allowed. The allowed height  is %(allowed_height)s.')
-    min_size_message = _('The current file %(size)s, which is too small. The minumum file size is %(allowed_size)s.')
-    max_size_message = _('The current file %(size)s, which is too large. The maximum file size is %(allowed_size)s.')
+        'The current image height %(height)s, which is not allowed.'
+        'The allowed height  is %(allowed_height)s.')
+    min_size_message = _(
+        'The current file %(size)s, which is too small. '
+        'The minimum file size is %(allowed_size)s.')
+    max_size_message = _(
+        'The current file %(size)s, which is too large. '
+        'The maximum file size is %(allowed_size)s.')
 
     def __init__(self, *args, **kwargs):
         self.allowed_extensions = []
@@ -26,10 +37,7 @@ class FileValidator(object):
         self.allowed_height = kwargs.pop('allowed_height', None)
 
     def __call__(self, value):
-        pass
-        """
-        Check the extension, content type and file size.
-        """
+        """Check the extension, content type and file size."""
 
         # Check the extension
         ext = splitext(value.name)[1][1:].lower()
@@ -43,6 +51,7 @@ class FileValidator(object):
 
         # Check the file size
         filesize = len(value)
+
         if self.max_size and filesize > self.max_size:
             message = self.max_size_message % {
                 'size': filesizeformat(filesize),
@@ -51,7 +60,7 @@ class FileValidator(object):
 
             raise ValidationError(message)
 
-        elif filesize < self.min_size:
+        if filesize < self.min_size:
             message = self.min_size_message % {
                 'size': filesizeformat(filesize),
                 'allowed_size': filesizeformat(self.min_size)
@@ -80,7 +89,8 @@ class FileValidator(object):
 
 
 @deconstructible
-class ImagePath(object):
+class ImagePath:
+    """Returns path to upload image"""
     def __init__(self, path, width=0, height=0, extension=''):
         self.width = width
         self.height = height
@@ -89,5 +99,5 @@ class ImagePath(object):
 
     def __call__(self, _, filename):
         extension = os.path.splitext(filename)[1]
-        imagePath = self.path % (uuid.uuid4(), extension)
-        return imagePath
+        image_path = self.path % (uuid.uuid4(), extension)
+        return image_path
