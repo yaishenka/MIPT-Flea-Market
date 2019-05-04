@@ -8,10 +8,9 @@ USE_X_FORWARDED_HOST = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres_db',
-        'USER' : 'flea_market',
-        'PASSWORD' : POSTGRES_PASSWORD,
-        'HOST' : '127.0.0.1',
-        'PORT' : '5432',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
