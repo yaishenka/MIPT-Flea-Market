@@ -12,7 +12,7 @@ with open('security_info.json') as json_secret:
 
 VK_API_VERSION = 5.90
 
-ALLOWED_HOSTS = ['127.0.0.1', '178.62.97.148', 'yaishenka.site']
+ALLOWED_HOSTS = ['127.0.0.1', '178.62.97.148', 'yaishenka.site', 'localhost']
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
