@@ -8,6 +8,7 @@ with open('security_info.json') as json_secret:
     VK_API_KEY = secret_data['vk_api_key']
     SOCIAL_AUTH_VK_OAUTH2_KEY = secret_data['SOCIAL_AUTH_VK_OAUTH2_KEY']
     SOCIAL_AUTH_VK_OAUTH2_SECRET = secret_data['SOCIAL_AUTH_VK_OAUTH2_SECRET']
+    POSTGRES_PASSWORD = secret_data['POSTGRES_PASSWORD']
 
 VK_API_VERSION = 5.90
 
@@ -76,13 +77,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mainapp.wsgi.application'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
