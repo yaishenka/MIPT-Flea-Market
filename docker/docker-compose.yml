@@ -1,0 +1,41 @@
+version: '2'
+
+volumes:
+    pgdata:
+        driver: local
+
+services:
+    nginx:
+        restart: always
+        image: nginx:latest
+        expose:
+          - 8080
+        ports:
+          - "80:8080"
+        volumes:
+            - ./MIPT_Flea_Market/logs:/srv/MIPT_Flea_Market/logs
+            - ./docker/nginx:/etc/nginx/conf.d
+            - ./MIPT_Flea_Market/static:/srv/MIPT_Flea_Market/static 
+            - ./MIPT_Flea_Market/static/media:/srv/MIPT_Flea_Market/static/media
+        depends_on:
+            - python
+    python:
+        restart: always
+        build:
+            context: .
+            dockerfile: docker/python/Dockerfile
+        volumes:
+            - ./MIPT_Flea_Market/static:/srv/MIPT_Flea_Market/static 
+            - ./MIPT_Flea_Market/static/media:/srv/MIPT_Flea_Market/static/media
+        expose:
+          - 8000
+        ports:
+            - 8000:8000
+        command: bash -c "python manage.py migrate && python manage.py collectstatic && gunicorn -c gunicorn_conf.py mainapp.wsgi" 
+        depends_on:
+            - db
+
+    db:
+        restart: always
+        image: postgres:latest
+        container_name: ps01

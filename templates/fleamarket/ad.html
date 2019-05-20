@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>{{ ad.get_header }} </p>
+    <p>Автор - <a href="{% url 'user_view' user_id=ad.seller.pk %}"> {{ad.seller.get_full_name}} </a></p>
+    {% if ad.image %}
+        <img src="{{ad.image.url}}">
+    {% endif %}
+    <p>{{ ad.text|linebreaksbr }}</p>
+    {% if user == ad.seller %}
+        <a href="{% url 'change_ad' pk=ad.pk %}"> edit </a>
+        <a href="{% url 'delete_ad' pk=ad.pk %}"> delete </a>
+    {% endif %}
+{% endblock %}

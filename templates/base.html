@@ -1,0 +1,23 @@
+{% load static %}
+<html>
+    <head>
+        <title>MIPT Flea Market</title>
+    </head>
+    <body>
+        <div style="text-align: right">
+            {% if user.is_authenticated %}
+                <a href="{% url 'new_ad'%}">Add ad</a>
+                <a href="{% url 'logout'%}">Logout</a>
+                <a href="{% url 'private_office' %}">Личный кабинет</a>
+            {% else %}
+                <a href="{% url 'login'%}">Login</a>
+                <a href="{% url 'social:begin' 'vk-oauth2' %}">Login via VK</a>
+            {% endif %}
+        </div>
+        <h1><a href="{% url 'ads_list' %}">MIPT Flea Market</a></h1>
+        <div class="col-md-8">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
