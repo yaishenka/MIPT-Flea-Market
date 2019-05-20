@@ -1,11 +1,14 @@
 import requests
 from django.conf import settings
 from django.contrib.auth import get_user_model
-import json
+import logging
+
+logger = logging.getLogger('vk')
 
 def send_vk_api_request(method_name, token, data):
     data['v'] = settings.VK_API_VERSION
     data['access_token'] = token
+    logger.info('send api request with data: {0}'.format(data))
     response = requests.get('https://api.vk.com/method/{}'.format(method_name), params=data)
     return response.json()
 

@@ -26,11 +26,11 @@ def user_login(request):
                     return redirect('ads_list')
         except get_user_model().DoesNotExist:
             error = 'Такой адрес или ник не существуют.'
-            return render(request, 'cabinet/auth.html',
+            return render(request, 'users/login.html',
                           {'form': login_form, 'error': error})
         except ValidationError as e:
             error = 'Неверный пароль'
-            return render(request, 'cabinet/auth.html',
+            return render(request, 'users/login.html',
                           {'form': login_form, 'error': error})
 
     else:

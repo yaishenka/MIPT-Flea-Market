@@ -34,6 +34,7 @@ class AbstractAd(models.Model):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.old_image = self.image
+
     def save(self, *args, **kwargs):
         if self.image:
             try:
@@ -48,9 +49,7 @@ class AbstractAd(models.Model):
                     output.seek(0)
                     # change the imagefield value to be the newley modifed image value
                     self.image = InMemoryUploadedFile(output, 'ImageField',
-                                                      "%s.png" %
-                                                      self.image.name.split(
-                                                          '.')[0],
+                                                      "%s.png" % self.image.name.split('.')[0],
                                                       'image/png',
                                                       sys.getsizeof(output),
                                                       None)

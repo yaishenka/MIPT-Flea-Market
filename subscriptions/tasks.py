@@ -7,9 +7,9 @@ def make_a_mailing(ad):
     except:
         group = None
 
-    notification_text = '''Новое объявление в категории {0}! \n
-                           Автор - {1} \n
-                           {2} \n
+    notification_text = '''Новое объявление в категории {0}!
+                           Автор - {1}
+                           {2}
                            {3}
                         '''.format(ad.category, ad.seller.get_full_name, ad.header, ad.text)
 
