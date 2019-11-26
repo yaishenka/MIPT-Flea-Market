@@ -1,5 +1,7 @@
 # MIPT-Flea-Market
 
+Docker-version http://gitlab.atp-fivt.org/yaishenka/fleamarketdockerversion
+
 Идея - сделать барахолку физтеха. Оказалось, правда, что сама барахолка тоже на джанге и в принципе не так плоха... Но что не сделаешь ради CR по питону. 
 Использованные технологии: django, vk api + vk call_back api, nginx, gunicorn, supervisor
 
